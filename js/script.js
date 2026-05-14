@@ -179,6 +179,7 @@ const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 const navLogo = document.querySelector('.nav-logo');
 const logoHasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const isMobileNav = window.matchMedia('(max-width: 768px)');
 
 // Smooth scroll and nav highlight
 window.addEventListener('scroll', () => {
@@ -218,10 +219,26 @@ hamburger?.addEventListener('click', () => {
 
 // Close menu when link is clicked
 navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (event) => {
+        event.stopPropagation();
         navMenu?.classList.remove('active');
         hamburger?.classList.remove('active');
     });
+});
+
+// Mobile nav click routing: only the tapped nav-link should trigger.
+navMenu?.addEventListener('click', (event) => {
+    const tappedLink = event.target.closest('.nav-link');
+    if (!tappedLink) return;
+    event.stopPropagation();
+});
+
+// Ensure mobile menu state is reset when switching to desktop widths.
+isMobileNav.addEventListener('change', (event) => {
+    if (!event.matches) {
+        navMenu?.classList.remove('active');
+        hamburger?.classList.remove('active');
+    }
 });
 
 if (navLogo) {
