@@ -184,7 +184,7 @@ navLinks.forEach(link => {
 
 // ========== TYPING TEXT ANIMATION ==========
 const typedText = document.getElementById('typedText');
-const textToType = 'SUPRIYAM DEBNATH';
+const textToType = 'WELCOME TO MY DIGITAL UNIVERSE';
 let typeIndex = 0;
 
 function typeText() {
@@ -411,19 +411,14 @@ console.log('%c🎮 Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', '
 
 // ========== RESUME & CV FUNCTIONS ==========
 function viewResume() {
-    const pdfPath = './assets/resume/Supriyam_Debnath_CV.pdf';
-    const fullPdfPath = new URL(pdfPath, window.location.href).toString();
-    window.open(fullPdfPath, '_blank');
+    window.open("assets/resume/Supriyam_Debnath_CV.pdf", "_blank");
 }
 
 function downloadResume() {
-    const pdfPath = './assets/resume/Supriyam_Debnath_CV.pdf';
-    const fullPdfPath = new URL(pdfPath, window.location.href).toString();
-
     const link = document.createElement('a');
-    link.href = fullPdfPath;
-    link.download = 'Supriyam_Debnath_CV.pdf';
-    link.target = '_blank';
+
+    link.href = "assets/resume/Supriyam_Debnath_CV.pdf";
+    link.download = "Supriyam_Debnath_CV.pdf";
 
     document.body.appendChild(link);
     link.click();
