@@ -624,6 +624,56 @@ body::before {
     animation: fadeInRight 1.2s ease;
 }
 
+.profile-frame {
+    position: relative;
+    width: 320px;
+    height: 420px;
+    border-radius: 40px;
+    padding: 18px;
+    background: linear-gradient(180deg, rgba(0, 212, 255, 0.15), rgba(255, 0, 110, 0.1));
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.profile-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.18);
+    display: block;
+}
+
+.profile-placeholder {
+    position: absolute;
+    inset: 18px;
+    border-radius: 32px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    background: rgba(10, 14, 39, 0.95);
+    border: 2px dashed rgba(0, 212, 255, 0.35);
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+}
+
+.profile-ring {
+    position: absolute;
+    inset: 12px;
+    border: 2px solid rgba(0, 212, 255, 0.5);
+    border-radius: 36px;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.2);
+    pointer-events: none;
+}
+
 @keyframes fadeInRight {
     from { opacity: 0; transform: translateX(40px); }
     to { opacity: 1; transform: translateX(0); }
@@ -1568,6 +1618,17 @@ section {
 
     .hero-visual {
         order: -1;
+    }
+
+    .profile-frame {
+        width: 100%;
+        max-width: 320px;
+        height: auto;
+        padding: 14px;
+    }
+
+    .profile-photo {
+        border-radius: 28px;
     }
 
     .neon-box {
