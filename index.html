@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supriyam Debnath - AI & Frontend Developer Portfolio</title>
+
+    <!-- Google Fonts for Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon (Optional) -->
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300d4ff'>S</text></svg>">
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-cube">
+                <div class="cube-face"></div>
+                <div class="cube-face"></div>
+                <div class="cube-face"></div>
+            </div>
+            <p class="loading-text">INITIALIZING PORTFOLIO</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress"></div>
+
+    <!-- Particle Background -->
+    <div class="particle-bg">
+        <canvas id="particleCanvas"></canvas>
+    </div>
+
+    <!-- Floating Neon Particles -->
+    <div class="floating-particles"></div>
+
+    <!-- Cursor Glow -->
+    <div class="cursor-glow"></div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">SD</span>
+                <span class="logo-glow"></span>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">HOME</a></li>
+                <li><a href="#about" class="nav-link">ABOUT</a></li>
+                <li><a href="#skills" class="nav-link">SKILLS</a></li>
+                <li><a href="#projects" class="nav-link">PROJECTS</a></li>
+                <li><a href="#journey" class="nav-link">JOURNEY</a></li>
+                <li><a href="#contact" class="nav-link">CONTACT</a></li>
+            </ul>
+
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <p class="hero-subtitle">Welcome to my digital universe</p>
+                <h1 class="hero-title">
+                    <span class="typed-text" id="typedText"></span>
+                </h1>
+                <p class="hero-desc">
+                    <span class="gradient-text">CSE Student</span> |
+                    <span class="gradient-text">AI Developer</span> |
+                    <span class="gradient-text">Frontend Developer</span>
+                </p>
+                <p class="hero-tagline">Crafting intelligent systems & futuristic web experiences with AI & modern technologies</p>
+
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        <span>EXPLORE WORK</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <span>GET IN TOUCH</span>
+                        <div class="btn-glow"></div>
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat">
+                        <p class="stat-number">50+</p>
+                        <p class="stat-label">Projects</p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat-number">100%</p>
+                        <p class="stat-label">Passion</p>
+                    </div>
+                    <div class="stat">
+                        <p class="stat-number">10+</p>
+                        <p class="stat-label">Technologies</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="neon-box">
+                    <div class="box-inner">
+                        <svg viewBox="0 0 200 200" class="hero-icon">
+                            <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <path d="M 60 100 L 100 140 L 140 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="100" cy="100" r="15" fill="currentColor" opacity="0.5"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <span>SCROLL TO EXPLORE</span>
+            <div class="mouse-wheel"></div>
+        </div>
+    </section>
+
+    <!-- ========== ABOUT SECTION ========== -->
+    <section id="about" class="about">
+        <div class="section-header">
+            <h2 class="section-title">ABOUT ME</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="about-container">
+            <div class="about-text">
+                <h3>Computer Science Engineering Student</h3>
+                <p>
+                    I'm a passionate Computer Science student fascinated by the intersection of Artificial Intelligence,
+                    cutting-edge Frontend Development, and futuristic UI Design. My journey is driven by curiosity to create
+                    intelligent systems that solve real-world problems while delivering exceptional user experiences.
+                </p>
+                <p>
+                    With a strong foundation in Python, AI/ML, and modern web technologies, I focus on building
+                    AI-powered applications and visually stunning interfaces that push the boundaries of what's possible
+                    on the web.
+                </p>
+
+                <div class="about-highlights">
+                    <div class="highlight">
+                        <span class="highlight-icon">🎯</span>
+                        <p>Innovation through AI & Problem Solving</p>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-icon">🎨</span>
+                        <p>Futuristic UI Design & User Experience</p>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-icon">⚡</span>
+                        <p>Modern Web Technologies & Performance</p>
+                    </div>
+                    <div class="highlight">
+                        <span class="highlight-icon">🧠</span>
+                        <p>AI-Powered Applications & Machine Learning</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-visual">
+                <div class="about-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <p class="about-stat">4+</p>
+                        <p class="about-stat-label">Years Learning & Building</p>
+                    </div>
+                </div>
+                <div class="about-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <p class="about-stat">CSE</p>
+                        <p class="about-stat-label">Engineering Student</p>
+                    </div>
+                </div>
+                <div class="about-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <p class="about-stat">∞</p>
+                        <p class="about-stat-label">Growth Mindset</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SKILLS SECTION ========== -->
+    <section id="skills" class="skills">
+        <div class="section-header">
+            <h2 class="section-title">TECHNICAL ARSENAL</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="skills-container">
+            <!-- Frontend Skills -->
+            <div class="skill-category">
+                <h3 class="category-title">Frontend Mastery</h3>
+                <div class="skill-cards">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="60" fill="currentColor" font-weight="bold">H</text>
+                            </svg>
+                        </div>
+                        <h4>HTML5</h4>
+                        <p>Semantic markup</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="60" fill="currentColor" font-weight="bold">C</text>
+                            </svg>
+                        </div>
+                        <h4>CSS3</h4>
+                        <p>Animations & Design</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="60" fill="currentColor" font-weight="bold">J</text>
+                            </svg>
+                        </div>
+                        <h4>JavaScript</h4>
+                        <p>Interactivity</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backend & AI Skills -->
+            <div class="skill-category">
+                <h3 class="category-title">AI & Backend</h3>
+                <div class="skill-cards">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="60" fill="currentColor" font-weight="bold">P</text>
+                            </svg>
+                        </div>
+                        <h4>Python</h4>
+                        <p>AI & Automation</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="50" fill="currentColor" font-weight="bold">F</text>
+                            </svg>
+                        </div>
+                        <h4>Flask</h4>
+                        <p>Web Framework</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="50" fill="currentColor" font-weight="bold">CV</text>
+                            </svg>
+                        </div>
+                        <h4>OpenCV</h4>
+                        <p>Computer Vision</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools & Design -->
+            <div class="skill-category">
+                <h3 class="category-title">Tools & More</h3>
+                <div class="skill-cards">
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="50" fill="currentColor" font-weight="bold">Git</text>
+                            </svg>
+                        </div>
+                        <h4>Git & GitHub</h4>
+                        <p>Version Control</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="50" fill="currentColor" font-weight="bold">UI</text>
+                            </svg>
+                        </div>
+                        <h4>UI/UX Design</h4>
+                        <p>User Experience</p>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-icon">
+                            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                                <text x="50" y="70" text-anchor="middle" font-size="50" fill="currentColor" font-weight="bold">AI</text>
+                            </svg>
+                        </div>
+                        <h4>AI Tools</h4>
+                        <p>Machine Learning</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PROJECTS SECTION ========== -->
+    <section id="projects" class="projects">
+        <div class="section-header">
+            <h2 class="section-title">FEATURED PROJECTS</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="projects-grid">
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">01</div>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-content">
+                    <h3>AI Attendance System</h3>
+                    <p>Face recognition-based attendance system using OpenCV and Python. Intelligent system for automated attendance tracking in educational institutions.</p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">OpenCV</span>
+                        <span class="tag">Face Recognition</span>
+                        <span class="tag">AI</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="#" class="project-btn">LIVE DEMO</a>
+                        <a href="#" class="project-btn github">GITHUB</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">02</div>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-content">
+                    <h3>Futuristic Portfolio</h3>
+                    <p>Premium gaming-style portfolio website with glassmorphism, particle effects, and advanced animations. Designed to impress and attract recruiters.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Animation</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="#" class="project-btn">LIVE DEMO</a>
+                        <a href="#" class="project-btn github">GITHUB</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">03</div>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-content">
+                    <h3>Smart Dashboard UI</h3>
+                    <p>Modern analytics dashboard with real-time data visualization. Features glassmorphism design, responsive layout, and interactive components.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Charts.js</span>
+                        <span class="tag">UI Design</span>
+                        <span class="tag">Responsive</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="#" class="project-btn">LIVE DEMO</a>
+                        <a href="#" class="project-btn github">GITHUB</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <div class="project-number">04</div>
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-content">
+                    <h3>AI Web Applications</h3>
+                    <p>Collection of AI-powered web applications built with Python Flask and modern frontend. Includes chatbots, ML models integration, and data processing.</p>
+                    <div class="project-tags">
+                        <span class="tag">Flask</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">ML</span>
+                        <span class="tag">Full Stack</span>
+                    </div>
+                    <div class="project-buttons">
+                        <a href="#" class="project-btn">LIVE DEMO</a>
+                        <a href="#" class="project-btn github">GITHUB</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== LEARNING JOURNEY SECTION ========== -->
+    <section id="journey" class="journey">
+        <div class="section-header">
+            <h2 class="section-title">MY LEARNING JOURNEY</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-glow"></div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Foundation Year</h3>
+                    <p class="timeline-date">Year 1</p>
+                    <p>Started with Python fundamentals, learned programming basics, data structures, and algorithms. Developed problem-solving mindset and coding discipline.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-glow"></div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Frontend Development</h3>
+                    <p class="timeline-date">Year 2</p>
+                    <p>Mastered HTML5, CSS3, and JavaScript. Created responsive websites, learned modern UI frameworks, and built interactive web experiences with animations.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-glow"></div>
+                </div>
+                <div class="timeline-content">
+                    <h3>AI & Machine Learning</h3>
+                    <p class="timeline-date">Year 3</p>
+                    <p>Explored AI, ML libraries, OpenCV for computer vision, and neural networks. Built intelligent systems and face recognition applications. Started AI project building.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-glow"></div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Open Source & Collaboration</h3>
+                    <p class="timeline-date">Current</p>
+                    <p>Contributing to open source projects, mastering Git/GitHub, collaborating with developers, and building full-stack applications combining AI with modern web technologies.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="marker-dot"></div>
+                    <div class="marker-glow"></div>
+                </div>
+                <div class="timeline-content">
+                    <h3>Future Vision</h3>
+                    <p class="timeline-date">Next</p>
+                    <p>Building AI-powered web applications, advancing in deep learning, creating innovative products that solve real-world problems, and pushing the boundaries of technology.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2 class="section-title">LET'S COLLABORATE</h2>
+            <div class="title-underline"></div>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Get In Touch</h3>
+                <p>I'm always interested in hearing about new opportunities, collaboration, and projects. Feel free to reach out!</p>
+
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <span class="method-icon">📧</span>
+                        <div>
+                            <p class="method-label">Email</p>
+                            <a href="mailto:supriyam@example.com">supriyam@example.com</a>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <span class="method-icon">💼</span>
+                        <div>
+                            <p class="method-label">LinkedIn</p>
+                            <a href="#" target="_blank">linkedin.com/in/supriyamdebnath</a>
+                        </div>
+                    </div>
+                    <div class="contact-method">
+                        <span class="method-icon">💻</span>
+                        <div>
+                            <p class="method-label">GitHub</p>
+                            <a href="#" target="_blank">github.com/supriyamdebnath</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="#" class="social-link" title="GitHub">GitHub</a>
+                    <a href="#" class="social-link" title="LinkedIn">LinkedIn</a>
+                    <a href="#" class="social-link" title="Twitter">Twitter</a>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input type="text" id="name" placeholder="YOUR NAME" required>
+                    <span class="form-focus"></span>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" placeholder="YOUR EMAIL" required>
+                    <span class="form-focus"></span>
+                </div>
+                <div class="form-group">
+                    <textarea id="message" placeholder="YOUR MESSAGE" rows="5" required></textarea>
+                    <span class="form-focus"></span>
+                </div>
+                <button type="submit" class="btn btn-submit">
+                    <span>SEND MESSAGE</span>
+                    <div class="btn-glow"></div>
+                </button>
+                <p class="form-message" id="formMessage"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                Designed & Developed by <span class="gradient-text">Supriyam Debnath</span>
+            </p>
+            <p class="footer-subtitle">Building the future, one line of code at a time</p>
+            <p class="footer-year">© 2024 - All Rights Reserved</p>
+        </div>
+        <div class="footer-glow"></div>
+    </footer>
+
+    <!-- Floating Music Notes (Easter Egg) -->
+    <div class="easter-egg" id="easterEgg">
+        <span class="note">♪</span>
+        <span class="note">♫</span>
+        <span class="note">♪</span>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
