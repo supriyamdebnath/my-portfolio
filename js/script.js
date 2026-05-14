@@ -2,7 +2,7 @@
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loading');
     setTimeout(() => {
-        loadingScreen.classList.add('hidden');
+        loadingScreen?.classList.add('hidden');
         startParticles();
     }, 2500);
 });
@@ -10,7 +10,12 @@ window.addEventListener('load', () => {
 // ========== SCROLL PROGRESS BAR ==========
 window.addEventListener('scroll', () => {
     const scrollProgress = document.querySelector('.scroll-progress');
+    if (!scrollProgress) return;
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    if (scrollHeight <= 0) {
+        scrollProgress.style.width = '0%';
+        return;
+    }
     const scrolled = (window.scrollY / scrollHeight) * 100;
     scrollProgress.style.width = scrolled + '%';
 });
@@ -95,13 +100,24 @@ window.addEventListener('resize', resizeCanvas);
 // ========== CURSOR GLOW EFFECT ==========
 const cursorGlow = document.querySelector('.cursor-glow');
 let cursorGlowTimeout = null;
-const CURSOR_GLOW_INACTIVITY_MS = 900;
+const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+const CURSOR_GLOW_INACTIVITY_MS = hasFinePointer ? 700 : 320;
 
-function activateCursorGlow(x, y) {
+function deactivateCursorGlow() {
+    if (!cursorGlow) return;
+    cursorGlow.classList.remove('active', 'tap');
+    if (cursorGlowTimeout) {
+        clearTimeout(cursorGlowTimeout);
+        cursorGlowTimeout = null;
+    }
+}
+
+function activateCursorGlow(x, y, tapOnly = false) {
     if (!cursorGlow) return;
 
     cursorGlow.style.left = x + 'px';
     cursorGlow.style.top = y + 'px';
+    cursorGlow.classList.toggle('tap', tapOnly);
     cursorGlow.classList.add('active');
 
     if (cursorGlowTimeout) {
@@ -109,28 +125,35 @@ function activateCursorGlow(x, y) {
     }
 
     cursorGlowTimeout = window.setTimeout(() => {
-        cursorGlow.classList.remove('active');
+        cursorGlow.classList.remove('active', 'tap');
         cursorGlowTimeout = null;
-    }, CURSOR_GLOW_INACTIVITY_MS);
+    }, tapOnly ? 260 : CURSOR_GLOW_INACTIVITY_MS);
 }
 
-document.addEventListener('pointermove', (e) => {
-    activateCursorGlow(e.clientX, e.clientY);
-});
-
 document.addEventListener('pointerdown', (e) => {
-    activateCursorGlow(e.clientX, e.clientY);
+    activateCursorGlow(e.clientX, e.clientY, !hasFinePointer || e.pointerType === 'touch');
 });
 
-document.addEventListener('pointerleave', () => {
-    if (cursorGlow) {
-        cursorGlow.classList.remove('active');
-    }
-    if (cursorGlowTimeout) {
-        clearTimeout(cursorGlowTimeout);
-        cursorGlowTimeout = null;
+if (hasFinePointer) {
+    document.addEventListener('pointermove', (e) => {
+        activateCursorGlow(e.clientX, e.clientY);
+    });
+}
+
+document.addEventListener('pointerup', () => {
+    if (!hasFinePointer) {
+        window.setTimeout(() => deactivateCursorGlow(), 120);
     }
 });
+
+document.addEventListener('pointercancel', deactivateCursorGlow);
+document.addEventListener('pointerleave', deactivateCursorGlow);
+
+window.addEventListener('scroll', () => {
+    if (!hasFinePointer) {
+        deactivateCursorGlow();
+    }
+}, { passive: true });
 
 // ========== NAVBAR INTERACTIONS ==========
 const navLinks = document.querySelectorAll('.nav-link');
@@ -188,6 +211,7 @@ const textToType = 'WELCOME TO MY DIGITAL UNIVERSE';
 let typeIndex = 0;
 
 function typeText() {
+    if (!typedText) return;
     if (typeIndex < textToType.length) {
         typedText.textContent += textToType[typeIndex];
         typeIndex++;
@@ -202,9 +226,11 @@ window.addEventListener('load', () => {
 // ========== SMOOTH SCROLL NAVIGATION ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const targetSelector = this.getAttribute('href');
+        if (!targetSelector || targetSelector.length < 2) return;
+        const target = document.querySelector(targetSelector);
         if (target) {
+            e.preventDefault();
             target.scrollIntoView({
                 behavior: 'smooth',
                 block: 'start'
@@ -231,7 +257,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe animated elements
 setTimeout(() => {
-    document.querySelectorAll('.project-card, .skill-card, .about-card, .timeline-item').forEach(el => {
+    document.querySelectorAll('.project-card, .skill-card, .about-card, .timeline-item, .rc-column, .rc-card').forEach(el => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(30px)';
         observer.observe(el);
@@ -472,12 +498,34 @@ function showResumeNotification(message, type = 'info') {
 
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
+const neonNotifications = document.getElementById('neonNotifications');
 
 function showFormMessage(message, type = 'error') {
     if (!formMessage) return;
+    if (!message) {
+        formMessage.textContent = '';
+        formMessage.classList.remove('show', 'error', 'success');
+        return;
+    }
     formMessage.textContent = message;
     formMessage.classList.remove('error', 'success');
     formMessage.classList.add('form-message', 'show', type);
+}
+
+function showNeonNotification(message, type = 'error') {
+    if (!neonNotifications || !message) return;
+
+    const notification = document.createElement('div');
+    notification.className = `neon-notification ${type}`;
+    notification.textContent = message;
+    neonNotifications.appendChild(notification);
+
+    window.setTimeout(() => {
+        notification.classList.add('fade-out');
+        window.setTimeout(() => {
+            notification.remove();
+        }, 320);
+    }, 2600);
 }
 
 function setFieldError(field, message) {
@@ -511,28 +559,38 @@ function validateContactForm() {
     clearFieldError(nameField);
     clearFieldError(emailField);
     clearFieldError(messageField);
-    showFormMessage('', 'success');
+    showFormMessage('');
+    const errors = [];
 
     if (!nameField?.value.trim()) {
         setFieldError(nameField, 'Please enter your name.');
+        errors.push('Please enter your name');
         isValid = false;
     }
 
     if (!emailField?.value.trim()) {
-        setFieldError(emailField, 'Please enter your email.');
+        setFieldError(emailField, 'Please enter a valid email.');
+        errors.push('Please enter a valid email');
         isValid = false;
     } else if (!validateEmail(emailField.value.trim())) {
         setFieldError(emailField, 'Please enter a valid email address.');
+        errors.push('Please enter a valid email');
         isValid = false;
     }
 
     if (!messageField?.value.trim()) {
-        setFieldError(messageField, 'Write a short message.');
+        setFieldError(messageField, 'Message cannot be empty.');
+        errors.push('Message cannot be empty');
         isValid = false;
     }
 
     if (!isValid) {
         showFormMessage('Please fix the highlighted fields and try again.', 'error');
+        [...new Set(errors)].forEach((errorText, index) => {
+            window.setTimeout(() => {
+                showNeonNotification(errorText, 'error');
+            }, index * 120);
+        });
     }
 
     return isValid;
@@ -546,6 +604,7 @@ if (contactForm) {
         }
 
         showFormMessage('Preparing message...', 'success');
+        showNeonNotification('Message is ready to send.', 'success');
     });
 
     ['name', 'email', 'message'].forEach((fieldId) => {
@@ -665,10 +724,23 @@ const projectsData = [
 function openProjectModal(index) {
     const project = projectsData[index];
     const modal = document.getElementById('projectModal');
+    if (!project || !modal) return;
     
-    document.getElementById('modalTitle').textContent = project.title;
-    
+    const modalTitle = document.getElementById('modalTitle');
     const tagsContainer = document.getElementById('modalTags');
+    const overview = document.getElementById('modalOverview');
+    const featuresContainer = document.getElementById('modalFeatures');
+    const technologies = document.getElementById('modalTech');
+    const futureContainer = document.getElementById('modalFuture');
+    const demoBtn = document.getElementById('demoBtn');
+    const githubBtn = document.getElementById('githubBtn');
+
+    if (!modalTitle || !tagsContainer || !overview || !featuresContainer || !technologies || !futureContainer || !demoBtn || !githubBtn) {
+        return;
+    }
+
+    modalTitle.textContent = project.title;
+    
     tagsContainer.innerHTML = '';
     project.tags.forEach(tag => {
         const tagEl = document.createElement('span');
@@ -677,9 +749,8 @@ function openProjectModal(index) {
         tagsContainer.appendChild(tagEl);
     });
     
-    document.getElementById('modalOverview').textContent = project.overview;
+    overview.textContent = project.overview;
     
-    const featuresContainer = document.getElementById('modalFeatures');
     featuresContainer.innerHTML = '';
     project.features.forEach(feature => {
         const li = document.createElement('li');
@@ -687,9 +758,8 @@ function openProjectModal(index) {
         featuresContainer.appendChild(li);
     });
     
-    document.getElementById('modalTech').textContent = project.technologies;
+    technologies.textContent = project.technologies;
     
-    const futureContainer = document.getElementById('modalFuture');
     futureContainer.innerHTML = '';
     project.future.forEach(item => {
         const li = document.createElement('li');
@@ -697,8 +767,8 @@ function openProjectModal(index) {
         futureContainer.appendChild(li);
     });
     
-    document.getElementById('demoBtn').href = project.demoUrl;
-    document.getElementById('githubBtn').href = project.githubUrl;
+    demoBtn.href = project.demoUrl;
+    githubBtn.href = project.githubUrl;
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -706,6 +776,7 @@ function openProjectModal(index) {
 
 function closeProjectModal() {
     const modal = document.getElementById('projectModal');
+    if (!modal) return;
     modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
