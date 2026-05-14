@@ -236,14 +236,16 @@ body::before {
     pointer-events: none;
     z-index: 9997;
     mix-blend-mode: screen;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%) scale(0.9);
     box-shadow: 0 0 20px var(--primary), inset 0 0 20px rgba(0, 212, 255, 0.3);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    will-change: opacity, transform, left, top;
 }
 
 .cursor-glow.active {
     opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1.12);
 }
 
 /* ========== NAVBAR ========== */
@@ -1627,103 +1629,6 @@ section {
     box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
 }
 
-/* ========== CERTIFICATIONS SECTION ========== */
-.certifications {
-    background: linear-gradient(180deg, rgba(160, 32, 240, 0.03) 0%, transparent 100%);
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-}
-
-.certifications-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
-}
-
-.certification-card {
-    background: var(--bg-card);
-    border: 2px solid var(--border-color);
-    border-radius: 16px;
-    padding: 30px;
-    text-align: center;
-    transition: all 0.4s ease;
-    position: relative;
-    overflow: hidden;
-    backdrop-filter: blur(10px);
-    animation: fadeInUp 0.8s ease;
-}
-
-.certification-card:hover {
-    border-color: var(--accent);
-    transform: translateY(-10px);
-    box-shadow: 0 20px 60px rgba(160, 32, 240, 0.2);
-}
-
-.certification-icon {
-    font-size: 48px;
-    margin-bottom: 20px;
-    display: block;
-}
-
-.certification-content h3 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 8px;
-    transition: color 0.3s ease;
-}
-
-.certification-card:hover .certification-content h3 {
-    color: var(--accent);
-}
-
-.certification-issuer {
-    color: var(--text-secondary);
-    font-size: 14px;
-    margin-bottom: 5px;
-}
-
-.certification-year {
-    color: var(--text-muted);
-    font-size: 12px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.certification-link {
-    display: inline-block;
-    padding: 8px 16px;
-    border: 1px solid var(--accent);
-    background: rgba(160, 32, 240, 0.1);
-    color: var(--accent);
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.certification-link:hover {
-    background: var(--accent);
-    color: var(--bg-dark);
-    box-shadow: 0 0 20px rgba(160, 32, 240, 0.5);
-}
-
-.certification-glow {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, rgba(160, 32, 240, 0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.certification-card:hover .certification-glow {
-    opacity: 1;
-}
-    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-}
 
 .form-focus {
     position: absolute;

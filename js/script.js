@@ -94,18 +94,41 @@ window.addEventListener('resize', resizeCanvas);
 
 // ========== CURSOR GLOW EFFECT ==========
 const cursorGlow = document.querySelector('.cursor-glow');
+let cursorGlowTimeout = null;
+const CURSOR_GLOW_INACTIVITY_MS = 900;
 
-document.addEventListener('mousemove', (e) => {
-    if (cursorGlow) {
-        cursorGlow.style.left = e.clientX + 'px';
-        cursorGlow.style.top = e.clientY + 'px';
-        cursorGlow.classList.add('active');
+function activateCursorGlow(x, y) {
+    if (!cursorGlow) return;
+
+    cursorGlow.style.left = x + 'px';
+    cursorGlow.style.top = y + 'px';
+    cursorGlow.classList.add('active');
+
+    if (cursorGlowTimeout) {
+        clearTimeout(cursorGlowTimeout);
     }
+
+    cursorGlowTimeout = window.setTimeout(() => {
+        cursorGlow.classList.remove('active');
+        cursorGlowTimeout = null;
+    }, CURSOR_GLOW_INACTIVITY_MS);
+}
+
+document.addEventListener('pointermove', (e) => {
+    activateCursorGlow(e.clientX, e.clientY);
 });
 
-document.addEventListener('mouseleave', () => {
+document.addEventListener('pointerdown', (e) => {
+    activateCursorGlow(e.clientX, e.clientY);
+});
+
+document.addEventListener('pointerleave', () => {
     if (cursorGlow) {
         cursorGlow.classList.remove('active');
+    }
+    if (cursorGlowTimeout) {
+        clearTimeout(cursorGlowTimeout);
+        cursorGlowTimeout = null;
     }
 });
 
@@ -388,36 +411,23 @@ console.log('%c🎮 Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', '
 
 // ========== RESUME & CV FUNCTIONS ==========
 function viewResume() {
-    const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
-    const htmlPath = 'assets/resume/Supriyam_Debnath_CV.html';
-    
-    // For GitHub Pages, use absolute path
-    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-    const fullPdfPath = baseUrl + pdfPath;
-    const fullHtmlPath = baseUrl + htmlPath;
-    
-    // Try to open PDF in new tab
+    const pdfPath = './assets/resume/Supriyam_Debnath_CV.pdf';
+    const fullPdfPath = new URL(pdfPath, window.location.href).toString();
     window.open(fullPdfPath, '_blank');
 }
 
 function downloadResume() {
-    const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
-    
-    // For GitHub Pages, use absolute path
-    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
-    const fullPdfPath = baseUrl + pdfPath;
-    
-    // Create download link
+    const pdfPath = './assets/resume/Supriyam_Debnath_CV.pdf';
+    const fullPdfPath = new URL(pdfPath, window.location.href).toString();
+
     const link = document.createElement('a');
     link.href = fullPdfPath;
     link.download = 'Supriyam_Debnath_CV.pdf';
     link.target = '_blank';
-    
+
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-            });
-    }, 100);
 }
 
 function showResumeNotification(message, type = 'info') {
@@ -427,9 +437,9 @@ function showResumeNotification(message, type = 'info') {
         'success': { bg: 'rgba(0, 255, 136, 0.15)', border: '#00ff88', text: '#00ff88' },
         'error': { bg: 'rgba(255, 0, 110, 0.15)', border: '#ff006e', text: '#ff006e' }
     };
-    
+
     const color = colors[type] || colors['info'];
-    
+
     notification.style.cssText = `
         position: fixed;
         top: 50%;
@@ -452,26 +462,13 @@ function showResumeNotification(message, type = 'info') {
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
-    
+
     setTimeout(() => {
         notification.style.animation = 'fadeOut 0.4s ease';
         setTimeout(() => {
             document.body.removeChild(notification);
         }, 400);
     }, 3500);
-}
-            }
-        })
-        .catch(() => {
-            // Fallback to HTML download
-            const link = document.createElement('a');
-            link.href = htmlPath;
-            link.download = 'Supriyam_Debnath_CV.html';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showResumeNotification('Downloaded as HTML. For PDF version, visit later.');
-        });
 }
 
 // ========== PROJECT MODAL FUNCTIONS ==========
