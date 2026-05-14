@@ -37,6 +37,38 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Prevent accidental text-caret rendering on static content. */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.hero-subtitle,
+.hero-name,
+.hero-desc,
+.hero-tagline,
+.nav-link,
+.stat-number,
+.stat-label,
+.about-text p,
+.hero-text p,
+.section-header p,
+.highlight p {
+    caret-color: transparent;
+}
+
+/* Static display text should not look editable. */
+.hero-subtitle,
+.hero-name,
+.hero-desc,
+.hero-tagline,
+.section-title,
+.nav-link,
+.highlight p,
+.about-text p,
+.stat-label,
+.stat-number {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg-dark);

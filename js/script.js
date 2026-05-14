@@ -222,23 +222,7 @@ navLinks.forEach(link => {
     });
 });
 
-// ========== TYPING TEXT ANIMATION ==========
-const typedText = document.getElementById('typedText');
-const textToType = 'WELCOME TO MY DIGITAL UNIVERSE';
-let typeIndex = 0;
-
-function typeText() {
-    if (!typedText) return;
-    if (typeIndex < textToType.length) {
-        typedText.textContent += textToType[typeIndex];
-        typeIndex++;
-        setTimeout(typeText, 60);
-    }
-}
-
-window.addEventListener('load', () => {
-    setTimeout(typeText, 1500);
-});
+// Typing effect intentionally removed to prevent caret-like behavior on static hero text.
 
 // ========== SMOOTH SCROLL NAVIGATION ==========
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
