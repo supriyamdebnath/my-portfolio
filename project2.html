@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Portfolio - Supriyam Debnath</title>
+
+    <!-- Google Fonts for Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300d4ff'>S</text></svg>">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-detail-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-detail-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 10;
+        }
+
+        .project-detail-title {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-detail-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .project-detail-tags {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .project-detail-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-detail-section h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .project-detail-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .screenshot {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 15px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tech-item {
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            border-color: var(--primary);
+        }
+
+        .tech-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .tech-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            color: var(--primary);
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .project-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .back-btn {
+                position: static;
+                margin: 20px;
+                display: inline-block;
+            }
+
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+    <!-- Project Hero -->
+    <section class="project-detail-hero">
+        <div class="project-detail-content">
+            <h1 class="project-detail-title">Futuristic Portfolio</h1>
+            <p class="project-detail-subtitle">Premium Gaming-Style Developer Portfolio</p>
+            <div class="project-detail-tags">
+                <span class="tag">HTML5</span>
+                <span class="tag">CSS3</span>
+                <span class="tag">JavaScript</span>
+                <span class="tag">Animation</span>
+                <span class="tag">UI/UX</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="project-detail-section">
+        <h2>Project Overview</h2>
+        <p>This futuristic portfolio website represents the pinnacle of modern web development, combining cutting-edge design principles with advanced interactive features. Built as a showcase piece, it demonstrates mastery of contemporary web technologies and creative design thinking.</p>
+        <p>The portfolio features a cyberpunk-inspired aesthetic with neon colors, glassmorphism effects, and smooth animations that create an immersive user experience. Every element is carefully crafted to impress recruiters and showcase technical expertise.</p>
+    </section>
+
+    <!-- Key Features -->
+    <section class="project-detail-section">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🎨</span>
+                <h3 class="feature-title">Glassmorphism Design</h3>
+                <p>Modern frosted glass effects with backdrop blur and translucent elements for a premium aesthetic</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">✨</span>
+                <h3 class="feature-title">Particle Animations</h3>
+                <p>Dynamic particle systems with floating neon particles and interactive cursor effects</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🎮</span>
+                <h3 class="feature-title">Gaming-Inspired UI</h3>
+                <p>Cyberpunk color scheme with RGB neon accents and futuristic typography</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📱</span>
+                <h3 class="feature-title">Fully Responsive</h3>
+                <p>Optimized for all devices with smooth animations and professional mobile experience</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3 class="feature-title">Performance Optimized</h3>
+                <p>Fast loading times with optimized assets and smooth 60fps animations</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🎯</span>
+                <h3 class="feature-title">Interactive Elements</h3>
+                <p>Hover effects, click animations, and Easter eggs for enhanced user engagement</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="project-detail-section">
+        <h2>Technology Stack</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <span class="tech-icon">🌐</span>
+                <div class="tech-name">HTML5</div>
+                <p>Semantic markup and accessibility</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🎨</span>
+                <div class="tech-name">CSS3</div>
+                <p>Advanced animations and styling</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">⚡</span>
+                <div class="tech-name">JavaScript</div>
+                <p>Interactive features and DOM manipulation</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🔤</span>
+                <div class="tech-name">Google Fonts</div>
+                <p>Premium typography</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">📐</span>
+                <div class="tech-name">CSS Grid/Flexbox</div>
+                <p>Modern layout systems</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🎭</span>
+                <div class="tech-name">CSS Animations</div>
+                <p>Smooth transitions and effects</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="project-detail-section">
+        <h2>Screenshots & Interface</h2>
+        <div class="screenshots-grid">
+            <div class="screenshot">
+                <img src="images/portfolio-1.jpg" alt="Hero Section" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%2300d4ff%22 font-size=%2218%22>Hero Section</text></svg>'">
+                <div class="screenshot-caption">Futuristic hero section with animated text</div>
+            </div>
+            <div class="screenshot">
+                <img src="images/portfolio-2.jpg" alt="Skills Section" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23ff006e%22 font-size=%2218%22>Skills Section</text></svg>'">
+                <div class="screenshot-caption">Interactive skills showcase</div>
+            </div>
+            <div class="screenshot">
+                <img src="images/portfolio-3.jpg" alt="Projects Grid" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%2300ff88%22 font-size=%2218%22>Projects Grid</text></svg>'">
+                <div class="screenshot-caption">Projects showcase with hover effects</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Process -->
+    <section class="project-detail-section">
+        <h2>Development Process</h2>
+        <p>The development of this portfolio followed a systematic approach focusing on performance, aesthetics, and user experience:</p>
+        <ul>
+            <li><strong>Design Phase:</strong> Created wireframes and mockups with cyberpunk theme</li>
+            <li><strong>Architecture:</strong> Planned component structure and animation system</li>
+            <li><strong>Implementation:</strong> Built responsive layouts with modern CSS techniques</li>
+            <li><strong>Animation:</strong> Implemented smooth transitions and particle effects</li>
+            <li><strong>Optimization:</strong> Optimized for performance and cross-browser compatibility</li>
+            <li><strong>Testing:</strong> Comprehensive testing across devices and browsers</li>
+        </ul>
+    </section>
+
+    <!-- Challenges & Solutions -->
+    <section class="project-detail-section">
+        <h2>Technical Challenges</h2>
+        <p>Developing this portfolio presented several technical challenges that were overcome through innovative solutions:</p>
+        <ul>
+            <li><strong>Performance:</strong> Optimized particle systems and animations for smooth 60fps</li>
+            <li><strong>Browser Compatibility:</strong> Ensured consistent experience across modern browsers</li>
+            <li><strong>Mobile Optimization:</strong> Responsive design with touch-friendly interactions</li>
+            <li><strong>Loading Times:</strong> Implemented lazy loading and asset optimization</li>
+            <li><strong>Accessibility:</strong> Maintained WCAG compliance with semantic HTML</li>
+        </ul>
+    </section>
+
+    <!-- Project Links -->
+    <section class="project-detail-section">
+        <div class="project-links">
+            <a href="https://github.com/supriyamdebnath/portfolio" class="btn btn-primary" target="_blank">
+                <span>VIEW SOURCE CODE</span>
+                <div class="btn-glow"></div>
+            </a>
+            <a href="index.html" class="btn btn-secondary">
+                <span>VIEW LIVE PORTFOLIO</span>
+                <div class="btn-glow"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                <a href="index.html" style="color: var(--gradient-primary); text-decoration: none;">← Back to Portfolio</a> |
+                Designed & Developed by <span class="gradient-text">Supriyam Debnath</span>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

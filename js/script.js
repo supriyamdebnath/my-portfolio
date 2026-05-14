@@ -216,57 +216,7 @@ setTimeout(() => {
 }, 2500);
 
 // ========== CONTACT FORM HANDLING ==========
-const contactForm = document.getElementById('contactForm');
-const formMessage = document.getElementById('formMessage');
-
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById('name')?.value || '';
-        const email = document.getElementById('email')?.value || '';
-        const message = document.getElementById('message')?.value || '';
-
-        // Validation
-        if (!name || !email || !message) {
-            showFormMessage('Please fill in all fields!', 'error');
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showFormMessage('Please enter a valid email address!', 'error');
-            return;
-        }
-
-        // Simulate form submission
-        const submitBtn = contactForm.querySelector('.btn-submit');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>SENDING...</span>';
-
-        setTimeout(() => {
-            showFormMessage('Message sent successfully! Thanks for reaching out! 🚀', 'success');
-            contactForm.reset();
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-
-            // Log form data
-            console.log('Contact Form Submission:', { name, email, message });
-        }, 1500);
-    });
-}
-
-function showFormMessage(message, type) {
-    if (formMessage) {
-        formMessage.textContent = message;
-        formMessage.className = `form-message show ${type}`;
-
-        setTimeout(() => {
-            formMessage.classList.remove('show');
-        }, 4000);
-    }
-}
+// Using FormSubmit service - no JavaScript handling needed
 
 // ========== BUTTON RIPPLE EFFECT ==========
 document.querySelectorAll('.btn').forEach(button => {
@@ -441,58 +391,31 @@ function viewResume() {
     const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
     const htmlPath = 'assets/resume/Supriyam_Debnath_CV.html';
     
-    // Try to open PDF directly
-    const pdfWindow = window.open(pdfPath, '_blank');
+    // For GitHub Pages, use absolute path
+    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+    const fullPdfPath = baseUrl + pdfPath;
+    const fullHtmlPath = baseUrl + htmlPath;
     
-    // If PDF didn't work, try HTML fallback after a short delay
-    if (!pdfWindow || pdfWindow.closed || typeof pdfWindow.closed === 'undefined') {
-        setTimeout(() => {
-            window.open(htmlPath, '_blank');
-        }, 500);
-    }
+    // Try to open PDF in new tab
+    window.open(fullPdfPath, '_blank');
 }
 
 function downloadResume() {
     const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
-    const htmlPath = 'assets/resume/Supriyam_Debnath_CV.html';
     
-    // Create a download link for PDF
+    // For GitHub Pages, use absolute path
+    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, '/');
+    const fullPdfPath = baseUrl + pdfPath;
+    
+    // Create download link
     const link = document.createElement('a');
-    link.href = pdfPath;
+    link.href = fullPdfPath;
     link.download = 'Supriyam_Debnath_CV.pdf';
+    link.target = '_blank';
     
-    // Try PDF download
     document.body.appendChild(link);
     link.click();
-    
-    // Check if download might have failed (browser dependent)
-    setTimeout(() => {
-        document.body.removeChild(link);
-        
-        // Verify if file exists by checking if it was downloaded
-        // If not, provide HTML fallback
-        fetch(pdfPath, { method: 'HEAD' })
-            .then(response => {
-                if (!response.ok) {
-                    // PDF not found, offer HTML
-                    const htmlLink = document.createElement('a');
-                    htmlLink.href = htmlPath;
-                    htmlLink.download = 'Supriyam_Debnath_CV.html';
-                    document.body.appendChild(htmlLink);
-                    htmlLink.click();
-                    document.body.removeChild(htmlLink);
-                    showResumeNotification('PDF will be available soon. Downloaded HTML resume instead.', 'info');
-                }
-            })
-            .catch(() => {
-                // Fallback to HTML if fetch fails
-                const htmlLink = document.createElement('a');
-                htmlLink.href = htmlPath;
-                htmlLink.download = 'Supriyam_Debnath_CV.html';
-                document.body.appendChild(htmlLink);
-                htmlLink.click();
-                document.body.removeChild(htmlLink);
-                showResumeNotification('PDF will be available soon. Downloaded HTML resume instead.', 'info');
+    document.body.removeChild(link);
             });
     }, 100);
 }

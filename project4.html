@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Web Applications - Supriyam Debnath</title>
+
+    <!-- Google Fonts for Premium Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2300d4ff'>S</text></svg>">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .project-detail-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-detail-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 10;
+        }
+
+        .project-detail-title {
+            font-size: clamp(48px, 8vw, 80px);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-detail-subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .project-detail-tags {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .project-detail-section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-detail-section h2 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .project-detail-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .screenshot {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .screenshot:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .screenshot img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .screenshot-caption {
+            padding: 15px;
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tech-item {
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            border-color: var(--primary);
+        }
+
+        .tech-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .tech-name {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 100px;
+            left: 20px;
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            color: var(--primary);
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            border-color: var(--primary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .project-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .ai-apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .ai-app-card {
+            background: var(--bg-glass);
+            border: 2px solid var(--border-color);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .ai-app-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .ai-app-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .ai-app-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .ai-app-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .ai-app-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ai-app-features li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .ai-app-features li::before {
+            content: "▸";
+            color: var(--primary);
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .back-btn {
+                position: static;
+                margin: 20px;
+                display: inline-block;
+            }
+
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Button -->
+    <a href="index.html" class="back-btn">← Back to Portfolio</a>
+
+    <!-- Project Hero -->
+    <section class="project-detail-hero">
+        <div class="project-detail-content">
+            <h1 class="project-detail-title">AI Web Applications</h1>
+            <p class="project-detail-subtitle">Collection of AI-Powered Web Applications</p>
+            <div class="project-detail-tags">
+                <span class="tag">Flask</span>
+                <span class="tag">Python</span>
+                <span class="tag">ML</span>
+                <span class="tag">Full Stack</span>
+                <span class="tag">AI</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section class="project-detail-section">
+        <h2>Project Overview</h2>
+        <p>This comprehensive collection of AI-powered web applications demonstrates advanced machine learning integration with modern web development. Built with Flask backend and featuring multiple AI capabilities, these applications showcase practical implementations of artificial intelligence in web environments.</p>
+        <p>The project includes chatbots, data analysis tools, and ML model deployment solutions, all wrapped in professional web interfaces with responsive design and intuitive user experiences.</p>
+    </section>
+
+    <!-- AI Applications -->
+    <section class="project-detail-section">
+        <h2>AI Applications Included</h2>
+        <div class="ai-apps-grid">
+            <div class="ai-app-card">
+                <span class="ai-app-icon">🤖</span>
+                <h3 class="ai-app-title">AI Chatbot</h3>
+                <p class="ai-app-description">Intelligent conversational AI with natural language processing capabilities, context awareness, and personalized responses.</p>
+                <ul class="ai-app-features">
+                    <li>Natural language understanding</li>
+                    <li>Context-aware conversations</li>
+                    <li>Multi-language support</li>
+                    <li>Learning from interactions</li>
+                </ul>
+            </div>
+            <div class="ai-app-card">
+                <span class="ai-app-icon">📊</span>
+                <h3 class="ai-app-title">Data Analysis Tool</h3>
+                <p class="ai-app-description">Automated data analysis platform with ML-powered insights, predictive analytics, and intelligent data visualization.</p>
+                <ul class="ai-app-features">
+                    <li>Automated data cleaning</li>
+                    <li>Predictive modeling</li>
+                    <li>Interactive visualizations</li>
+                    <li>Real-time insights</li>
+                </ul>
+            </div>
+            <div class="ai-app-card">
+                <span class="ai-app-icon">🧠</span>
+                <h3 class="ai-app-title">ML Model Deployer</h3>
+                <p class="ai-app-description">Web interface for deploying and managing machine learning models with API endpoints and performance monitoring.</p>
+                <ul class="ai-app-features">
+                    <li>Model deployment pipeline</li>
+                    <li>API endpoint generation</li>
+                    <li>Performance monitoring</li>
+                    <li>Version control</li>
+                </ul>
+            </div>
+            <div class="ai-app-card">
+                <span class="ai-app-icon">🎯</span>
+                <h3 class="ai-app-title">Recommendation Engine</h3>
+                <p class="ai-app-description">Personalized recommendation system using collaborative filtering and content-based algorithms.</p>
+                <ul class="ai-app-features">
+                    <li>Collaborative filtering</li>
+                    <li>Content-based recommendations</li>
+                    <li>Real-time personalization</li>
+                    <li>A/B testing framework</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features -->
+    <section class="project-detail-section">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="feature-icon">🧠</span>
+                <h3 class="feature-title">Advanced AI Models</h3>
+                <p>Integration of state-of-the-art machine learning models and NLP algorithms</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">⚡</span>
+                <h3 class="feature-title">High Performance</h3>
+                <p>Optimized for speed with efficient model inference and caching</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔒</span>
+                <h3 class="feature-title">Secure API</h3>
+                <p>RESTful APIs with authentication, rate limiting, and data validation</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📱</span>
+                <h3 class="feature-title">Responsive Design</h3>
+                <p>Modern web interfaces that work seamlessly across all devices</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">🔄</span>
+                <h3 class="feature-title">Real-Time Processing</h3>
+                <p>Live data processing and streaming capabilities</p>
+            </div>
+            <div class="feature-card">
+                <span class="feature-icon">📈</span>
+                <h3 class="feature-title">Analytics Dashboard</h3>
+                <p>Comprehensive monitoring and analytics for AI model performance</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="project-detail-section">
+        <h2>Technology Stack</h2>
+        <div class="tech-stack">
+            <div class="tech-item">
+                <span class="tech-icon">🐍</span>
+                <div class="tech-name">Python</div>
+                <p>Core programming language</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🌶️</span>
+                <div class="tech-name">Flask</div>
+                <p>Web framework for APIs</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🧠</span>
+                <div class="tech-name">TensorFlow</div>
+                <p>Machine learning framework</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">📊</span>
+                <div class="tech-name">Pandas</div>
+                <p>Data manipulation library</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🎨</span>
+                <div class="tech-name">HTML/CSS/JS</div>
+                <p>Frontend technologies</p>
+            </div>
+            <div class="tech-item">
+                <span class="tech-icon">🗄️</span>
+                <div class="tech-name">PostgreSQL</div>
+                <p>Database for data storage</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Process -->
+    <section class="project-detail-section">
+        <h2>Development Process</h2>
+        <p>The development of these AI applications followed a structured machine learning engineering approach:</p>
+        <ul>
+            <li><strong>Data Collection:</strong> Gathered and prepared training datasets for each AI model</li>
+            <li><strong>Model Training:</strong> Developed and trained machine learning models using TensorFlow</li>
+            <li><strong>API Development:</strong> Built RESTful APIs with Flask for model serving</li>
+            <li><strong>Frontend Integration:</strong> Created responsive web interfaces for user interaction</li>
+            <li><strong>Testing & Validation:</strong> Comprehensive testing of AI accuracy and web functionality</li>
+            <li><strong>Deployment:</strong> Containerized applications with Docker for scalable deployment</li>
+        </ul>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="project-detail-section">
+        <h2>Screenshots & Interface</h2>
+        <div class="screenshots-grid">
+            <div class="screenshot">
+                <img src="images/ai-chatbot.jpg" alt="AI Chatbot Interface" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%2300d4ff%22 font-size=%2218%22>AI Chatbot</text></svg>'">
+                <div class="screenshot-caption">Intelligent chatbot interface</div>
+            </div>
+            <div class="screenshot">
+                <img src="images/ai-dashboard.jpg" alt="Analytics Dashboard" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%23ff006e%22 font-size=%2218%22>Analytics Dashboard</text></svg>'">
+                <div class="screenshot-caption">AI analytics and monitoring</div>
+            </div>
+            <div class="screenshot">
+                <img src="images/ai-api.jpg" alt="API Documentation" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22><rect width=%22400%22 height=%22300%22 fill=%22%231a1f3a%22/><text x=%22200%22 y=%22150%22 text-anchor=%22middle%22 fill=%22%2300ff88%22 font-size=%2218%22>API Interface</text></svg>'">
+                <div class="screenshot-caption">RESTful API endpoints</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Challenges & Solutions -->
+    <section class="project-detail-section">
+        <h2>Technical Challenges</h2>
+        <p>Building production-ready AI web applications presented several complex challenges:</p>
+        <ul>
+            <li><strong>Model Performance:</strong> Optimized inference speed and memory usage for web deployment</li>
+            <li><strong>Scalability:</strong> Implemented efficient caching and load balancing for high traffic</li>
+            <li><strong>Data Security:</strong> Secured sensitive data and implemented proper authentication</li>
+            <li><strong>Model Updates:</strong> Built continuous learning pipelines for model improvement</li>
+            <li><strong>Integration:</strong> Seamlessly integrated AI capabilities with web interfaces</li>
+        </ul>
+    </section>
+
+    <!-- Project Links -->
+    <section class="project-detail-section">
+        <div class="project-links">
+            <a href="https://github.com/supriyamdebnath/ai-web-apps" class="btn btn-primary" target="_blank">
+                <span>VIEW SOURCE CODE</span>
+                <div class="btn-glow"></div>
+            </a>
+            <a href="index.html" class="btn btn-secondary">
+                <span>VIEW LIVE PORTFOLIO</span>
+                <div class="btn-glow"></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="footer-text">
+                <a href="index.html" style="color: var(--gradient-primary); text-decoration: none;">← Back to Portfolio</a> |
+                Designed & Developed by <span class="gradient-text">Supriyam Debnath</span>
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
