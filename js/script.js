@@ -436,6 +436,298 @@ console.log('%c🤖 AI Developer | Frontend Developer | CSE Student', 'color: #f
 console.log('%c💜 Check out the code and discover hidden features!', 'color: #a020f0; font-size: 12px;');
 console.log('%c🎮 Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', 'color: #00ff88; font-size: 11px;');
 
+// ========== RESUME & CV FUNCTIONS ==========
+function viewResume() {
+    const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
+    const htmlPath = 'assets/resume/Supriyam_Debnath_CV.html';
+    
+    // Try to open PDF directly
+    const pdfWindow = window.open(pdfPath, '_blank');
+    
+    // If PDF didn't work, try HTML fallback after a short delay
+    if (!pdfWindow || pdfWindow.closed || typeof pdfWindow.closed === 'undefined') {
+        setTimeout(() => {
+            window.open(htmlPath, '_blank');
+        }, 500);
+    }
+}
+
+function downloadResume() {
+    const pdfPath = 'assets/resume/Supriyam Debnath CV.pdf';
+    const htmlPath = 'assets/resume/Supriyam_Debnath_CV.html';
+    
+    // Create a download link for PDF
+    const link = document.createElement('a');
+    link.href = pdfPath;
+    link.download = 'Supriyam_Debnath_CV.pdf';
+    
+    // Try PDF download
+    document.body.appendChild(link);
+    link.click();
+    
+    // Check if download might have failed (browser dependent)
+    setTimeout(() => {
+        document.body.removeChild(link);
+        
+        // Verify if file exists by checking if it was downloaded
+        // If not, provide HTML fallback
+        fetch(pdfPath, { method: 'HEAD' })
+            .then(response => {
+                if (!response.ok) {
+                    // PDF not found, offer HTML
+                    const htmlLink = document.createElement('a');
+                    htmlLink.href = htmlPath;
+                    htmlLink.download = 'Supriyam_Debnath_CV.html';
+                    document.body.appendChild(htmlLink);
+                    htmlLink.click();
+                    document.body.removeChild(htmlLink);
+                    showResumeNotification('PDF will be available soon. Downloaded HTML resume instead.', 'info');
+                }
+            })
+            .catch(() => {
+                // Fallback to HTML if fetch fails
+                const htmlLink = document.createElement('a');
+                htmlLink.href = htmlPath;
+                htmlLink.download = 'Supriyam_Debnath_CV.html';
+                document.body.appendChild(htmlLink);
+                htmlLink.click();
+                document.body.removeChild(htmlLink);
+                showResumeNotification('PDF will be available soon. Downloaded HTML resume instead.', 'info');
+            });
+    }, 100);
+}
+
+function showResumeNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    const colors = {
+        'info': { bg: 'rgba(160, 32, 240, 0.15)', border: '#a020f0', text: '#a020f0' },
+        'success': { bg: 'rgba(0, 255, 136, 0.15)', border: '#00ff88', text: '#00ff88' },
+        'error': { bg: 'rgba(255, 0, 110, 0.15)', border: '#ff006e', text: '#ff006e' }
+    };
+    
+    const color = colors[type] || colors['info'];
+    
+    notification.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: ${color.bg};
+        border: 2px solid ${color.border};
+        color: ${color.text};
+        padding: 30px 40px;
+        border-radius: 15px;
+        font-size: 15px;
+        text-align: center;
+        z-index: 9001;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 40px ${color.border}40;
+        animation: slideUp 0.4s ease;
+        max-width: 90%;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.4s ease';
+        setTimeout(() => {
+            document.body.removeChild(notification);
+        }, 400);
+    }, 3500);
+}
+            }
+        })
+        .catch(() => {
+            // Fallback to HTML download
+            const link = document.createElement('a');
+            link.href = htmlPath;
+            link.download = 'Supriyam_Debnath_CV.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showResumeNotification('Downloaded as HTML. For PDF version, visit later.');
+        });
+}
+
+// ========== PROJECT MODAL FUNCTIONS ==========
+const projectsData = [
+    {
+        title: 'AI Attendance System',
+        description: 'Intelligent face recognition-based attendance system for automated tracking in educational institutions.',
+        overview: 'A sophisticated AI-powered attendance management system utilizing advanced face recognition technology. This system automates the attendance marking process in educational institutions, eliminating manual entry errors and improving efficiency. Built with Python and OpenCV, it processes real-time video feeds to identify and record student attendance accurately.',
+        tags: ['Python', 'OpenCV', 'Face Recognition', 'AI', 'Deep Learning'],
+        features: [
+            'Real-time face recognition using advanced CNN models',
+            'Automatic attendance marking and database storage',
+            'Live webcam feed processing and display',
+            'User-friendly interface for verification',
+            'Attendance report generation and export',
+            'Multi-face detection and recognition'
+        ],
+        technologies: 'Python 3, OpenCV, Deep Learning, Face Recognition Libraries, Database Management',
+        future: [
+            'Integration with college management systems',
+            'Mobile app for attendance verification',
+            'Advanced anti-spoofing techniques',
+            'Cloud-based attendance backup and analytics',
+            'Real-time alert notifications'
+        ],
+        demoUrl: '#',
+        githubUrl: 'https://github.com/supriyamdebnath'
+    },
+    {
+        title: 'Futuristic Portfolio Website',
+        description: 'Premium gaming-style portfolio with glassmorphism, particle effects, and advanced animations.',
+        overview: 'A showcase portfolio website demonstrating advanced web technologies and creative design. This project features cutting-edge CSS animations, particle systems, glassmorphism effects, and responsive design. It serves as both a professional portfolio and a technical demonstration of modern web development capabilities.',
+        tags: ['HTML5', 'CSS3', 'JavaScript', 'Animation', 'Responsive Design'],
+        features: [
+            'Particle animation system with Canvas API',
+            'Glassmorphism and modern UI design',
+            'Fully responsive mobile-first design',
+            'Interactive project details modal',
+            'Animated skill bars and statistics',
+            'Smooth scroll animations and transitions'
+        ],
+        technologies: 'HTML5, CSS3, Vanilla JavaScript, Canvas API, CSS Grid/Flexbox',
+        future: [
+            'Dark/Light mode toggle',
+            'Blog section with markdown support',
+            'Project filtering by technology',
+            'Email subscription integration',
+            'CMS backend integration'
+        ],
+        demoUrl: '#',
+        githubUrl: 'https://github.com/supriyamdebnath'
+    },
+    {
+        title: 'Smart Dashboard UI',
+        description: 'Modern analytics dashboard with real-time data visualization and glassmorphism design.',
+        overview: 'A professional analytics dashboard featuring modern UI components, real-time data visualization, and interactive charts. Built with React and Chart.js, this dashboard demonstrates expertise in state management, data visualization, and responsive design. Perfect for monitoring KPIs and business metrics.',
+        tags: ['React', 'Chart.js', 'UI Design', 'Responsive', 'Data Visualization'],
+        features: [
+            'Real-time data updates and live charts',
+            'Customizable dashboard widgets',
+            'Multiple chart types and visualizations',
+            'Interactive filters and date range selection',
+            'Export reports in PDF/CSV format',
+            'Dark mode support'
+        ],
+        technologies: 'React, Chart.js, Redux, Tailwind CSS, Recharts',
+        future: [
+            'User authentication and role-based access',
+            'Advanced analytics and predictive modeling',
+            'Custom alert and notification system',
+            'Multi-language support',
+            'API integration with backend services'
+        ],
+        demoUrl: '#',
+        githubUrl: 'https://github.com/supriyamdebnath'
+    },
+    {
+        title: 'AI Web Applications',
+        description: 'Collection of AI-powered web apps with Python Flask, chatbots, and ML model integration.',
+        overview: 'A comprehensive suite of full-stack AI-powered web applications demonstrating the integration of machine learning models with modern web technologies. This collection includes intelligent chatbots, data processing applications, and ML model servers built with Flask, featuring beautiful frontend interfaces and robust backend infrastructure.',
+        tags: ['Flask', 'Python', 'Machine Learning', 'Full Stack', 'API Development'],
+        features: [
+            'AI-powered chatbot with NLP capabilities',
+            'RESTful API for ML model inference',
+            'Real-time data processing and analysis',
+            'User authentication and session management',
+            'Database integration for data storage',
+            'Frontend dashboard for model monitoring'
+        ],
+        technologies: 'Python, Flask, TensorFlow, NLTK, PostgreSQL, Docker',
+        future: [
+            'Integration with advanced LLM models',
+            'Microservices architecture',
+            'GraphQL API implementation',
+            'Real-time WebSocket communication',
+            'Scalable deployment on cloud platforms'
+        ],
+        demoUrl: '#',
+        githubUrl: 'https://github.com/supriyamdebnath'
+    }
+];
+
+function openProjectModal(index) {
+    const project = projectsData[index];
+    const modal = document.getElementById('projectModal');
+    
+    document.getElementById('modalTitle').textContent = project.title;
+    
+    const tagsContainer = document.getElementById('modalTags');
+    tagsContainer.innerHTML = '';
+    project.tags.forEach(tag => {
+        const tagEl = document.createElement('span');
+        tagEl.className = 'tag';
+        tagEl.textContent = tag;
+        tagsContainer.appendChild(tagEl);
+    });
+    
+    document.getElementById('modalOverview').textContent = project.overview;
+    
+    const featuresContainer = document.getElementById('modalFeatures');
+    featuresContainer.innerHTML = '';
+    project.features.forEach(feature => {
+        const li = document.createElement('li');
+        li.textContent = feature;
+        featuresContainer.appendChild(li);
+    });
+    
+    document.getElementById('modalTech').textContent = project.technologies;
+    
+    const futureContainer = document.getElementById('modalFuture');
+    futureContainer.innerHTML = '';
+    project.future.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        futureContainer.appendChild(li);
+    });
+    
+    document.getElementById('demoBtn').href = project.demoUrl;
+    document.getElementById('githubBtn').href = project.githubUrl;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeProjectModal() {
+    const modal = document.getElementById('projectModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+document.getElementById('projectModal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'projectModal') {
+        closeProjectModal();
+    }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeProjectModal();
+    }
+});
+
+// ========== SCROLL INDICATOR AUTO-HIDE ==========
+let scrollIndicatorHidden = false;
+window.addEventListener('scroll', () => {
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    if (!scrollIndicator) return;
+    
+    // Hide scroll indicator if user has scrolled down
+    if (window.scrollY > 100 && !scrollIndicatorHidden) {
+        scrollIndicator.classList.add('hidden');
+        scrollIndicatorHidden = true;
+    } else if (window.scrollY <= 100 && scrollIndicatorHidden) {
+        scrollIndicator.classList.remove('hidden');
+        scrollIndicatorHidden = false;
+    }
+});
+
 // ========== DYNAMIC TITLE ON TAB CHANGE ==========
 document.addEventListener('visibilitychange', () => {
     if (document.hidden) {
