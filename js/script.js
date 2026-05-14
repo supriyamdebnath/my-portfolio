@@ -500,6 +500,9 @@ function showResumeNotification(message, type = 'info') {
 const contactForm = document.getElementById('contactForm');
 const formMessage = document.getElementById('formMessage');
 const neonNotifications = document.getElementById('neonNotifications');
+const sendMessageBtn = document.getElementById('sendMessageBtn');
+const sendMessageBtnLabel = sendMessageBtn?.querySelector('.btn-label');
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xbdwvrjl';
 
 function showFormMessage(message, type = 'error') {
     if (!formMessage) return;
@@ -579,9 +582,14 @@ function validateContactForm() {
         isValid = false;
     }
 
-    if (!messageField?.value.trim()) {
+    const messageText = messageField?.value.trim() || '';
+    if (!messageText) {
         setFieldError(messageField, 'Message cannot be empty.');
         errors.push('Message cannot be empty');
+        isValid = false;
+    } else if (messageText.length < 10) {
+        setFieldError(messageField, 'Message should be at least 10 characters.');
+        errors.push('Message is too short');
         isValid = false;
     }
 
@@ -597,15 +605,63 @@ function validateContactForm() {
     return isValid;
 }
 
+function setContactFormLoading(isLoading) {
+    if (!sendMessageBtn || !sendMessageBtnLabel) return;
+
+    sendMessageBtn.disabled = isLoading;
+    sendMessageBtn.classList.toggle('is-loading', isLoading);
+    sendMessageBtn.setAttribute('aria-busy', isLoading ? 'true' : 'false');
+    sendMessageBtnLabel.textContent = isLoading ? 'SENDING...' : 'SEND MESSAGE';
+}
+
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
         if (!validateContactForm()) {
-            e.preventDefault();
             return;
         }
 
-        showFormMessage('Preparing message...', 'success');
-        showNeonNotification('Message is ready to send.', 'success');
+        const nameField = document.getElementById('name');
+        const emailField = document.getElementById('email');
+        const messageField = document.getElementById('message');
+        if (!nameField || !emailField || !messageField) return;
+
+        setContactFormLoading(true);
+        showFormMessage('Transmitting message securely...', 'success');
+
+        try {
+            const response = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: nameField.value.trim(),
+                    email: emailField.value.trim(),
+                    message: messageField.value.trim(),
+                    _subject: 'New Contact Form Submission'
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Request failed with status ${response.status}`);
+            }
+
+            showFormMessage('Message sent successfully. I will get back to you soon.', 'success');
+            showNeonNotification('Message transmitted successfully.', 'success');
+            contactForm.reset();
+            ['name', 'email', 'message'].forEach((fieldId) => {
+                clearFieldError(document.getElementById(fieldId));
+            });
+        } catch (error) {
+            console.error('Formspree submission error:', error);
+            showFormMessage('Unable to send right now. Please try again in a moment.', 'error');
+            showNeonNotification('Transmission failed. Please retry.', 'error');
+        } finally {
+            setContactFormLoading(false);
+        }
     });
 
     ['name', 'email', 'message'].forEach((fieldId) => {

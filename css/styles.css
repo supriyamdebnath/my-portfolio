@@ -649,6 +649,34 @@ body::before {
     box-shadow: 0 0 24px rgba(0, 212, 255, 0.45), inset 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
+.btn-submit:disabled,
+.btn-submit.is-loading {
+    opacity: 0.78;
+    cursor: not-allowed;
+    filter: saturate(0.9);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.25), inset 0 0 12px rgba(255, 255, 255, 0.08);
+}
+
+.btn-submit .btn-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-submit.is-loading .btn-label::after {
+    content: '';
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.28);
+    border-top-color: rgba(255, 255, 255, 0.95);
+    animation: spinLoader 0.8s linear infinite;
+}
+
+@keyframes spinLoader {
+    to { transform: rotate(360deg); }
+}
+
 /* ========== RESUME BUTTONS ========== */
 .hero-resume-buttons {
     display: flex;
