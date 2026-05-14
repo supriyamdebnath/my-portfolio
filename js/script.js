@@ -177,6 +177,8 @@ const navLinks = document.querySelectorAll('.nav-link');
 const navbar = document.querySelector('.navbar');
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+const navLogo = document.querySelector('.nav-logo');
+const logoHasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 // Smooth scroll and nav highlight
 window.addEventListener('scroll', () => {
@@ -221,6 +223,43 @@ navLinks.forEach(link => {
         hamburger?.classList.remove('active');
     });
 });
+
+if (navLogo) {
+    window.addEventListener('load', () => {
+        window.setTimeout(() => navLogo.classList.add('logo-ready'), 180);
+    });
+
+    if (logoHasFinePointer) {
+        let rafId = null;
+        let targetX = 0;
+        let targetY = 0;
+
+        const renderTilt = () => {
+            navLogo.style.setProperty('--tilt-x', `${targetY * -3}deg`);
+            navLogo.style.setProperty('--tilt-y', `${targetX * 3}deg`);
+            navLogo.style.setProperty('--move-x', `${targetX * 1.1}px`);
+            navLogo.style.setProperty('--move-y', `${targetY * 1.1}px`);
+            rafId = null;
+        };
+
+        navLogo.addEventListener('pointermove', (e) => {
+            const rect = navLogo.getBoundingClientRect();
+            if (!rect.width || !rect.height) return;
+
+            targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+            targetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+
+            if (!rafId) rafId = requestAnimationFrame(renderTilt);
+        });
+    }
+
+    navLogo.addEventListener('pointerleave', () => {
+        navLogo.style.setProperty('--tilt-x', '0deg');
+        navLogo.style.setProperty('--tilt-y', '0deg');
+        navLogo.style.setProperty('--move-x', '0px');
+        navLogo.style.setProperty('--move-y', '0px');
+    });
+}
 
 // Typing effect intentionally removed to prevent caret-like behavior on static hero text.
 
