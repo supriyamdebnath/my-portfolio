@@ -102,6 +102,7 @@ const cursorGlow = document.querySelector('.cursor-glow');
 let cursorGlowTimeout = null;
 const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const CURSOR_GLOW_INACTIVITY_MS = hasFinePointer ? 700 : 320;
+let isPointerDown = false;
 
 function deactivateCursorGlow() {
     if (!cursorGlow) return;
@@ -131,29 +132,45 @@ function activateCursorGlow(x, y, tapOnly = false) {
 }
 
 document.addEventListener('pointerdown', (e) => {
+    isPointerDown = true;
     activateCursorGlow(e.clientX, e.clientY, !hasFinePointer || e.pointerType === 'touch');
 });
 
 if (hasFinePointer) {
     document.addEventListener('pointermove', (e) => {
+        if (e.pointerType !== 'mouse') return;
         activateCursorGlow(e.clientX, e.clientY);
     });
 }
 
 document.addEventListener('pointerup', () => {
+    isPointerDown = false;
     if (!hasFinePointer) {
         window.setTimeout(() => deactivateCursorGlow(), 120);
     }
 });
 
-document.addEventListener('pointercancel', deactivateCursorGlow);
-document.addEventListener('pointerleave', deactivateCursorGlow);
+document.addEventListener('pointercancel', () => {
+    isPointerDown = false;
+    deactivateCursorGlow();
+});
+document.addEventListener('pointerleave', () => {
+    isPointerDown = false;
+    deactivateCursorGlow();
+});
 
 window.addEventListener('scroll', () => {
     if (!hasFinePointer) {
         deactivateCursorGlow();
     }
 }, { passive: true });
+
+window.addEventListener('blur', deactivateCursorGlow);
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden || !isPointerDown) {
+        deactivateCursorGlow();
+    }
+});
 
 // ========== NAVBAR INTERACTIONS ==========
 const navLinks = document.querySelectorAll('.nav-link');
