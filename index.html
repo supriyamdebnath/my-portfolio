@@ -75,6 +75,7 @@
                 <h1 class="hero-title">
                     <span class="typed-text" id="typedText"></span>
                 </h1>
+                <h2 class="hero-name">Supriyam Debnath</h2>
                 <p class="hero-desc">CSE Student | Python & AI/ML | Freelancing</p>
                 <p class="hero-tagline">Crafting intelligent systems & futuristic web experiences with AI & modern technologies</p>
 
@@ -518,24 +519,26 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-            </form>
-        </div>
-            <form class="contact-form" id="contactForm" action="https://formsubmit.co/supriyamdebnath1@gmail.com" method="POST">
+            <form class="contact-form" id="contactForm" action="https://formsubmit.co/supriyamdebnath1@gmail.com" method="POST" novalidate>
                 <input type="hidden" name="_captcha" value="false">
                 <input type="hidden" name="_next" value="https://supriyamdebnath.github.io/my-portfolio/#contact">
                 <input type="hidden" name="_subject" value="New Contact Form Submission">
                 <div class="form-group">
                     <input type="text" id="name" name="name" placeholder="YOUR NAME" required>
                     <span class="form-focus"></span>
+                    <span class="form-error" aria-live="polite"></span>
                 </div>
                 <div class="form-group">
                     <input type="email" id="email" name="email" placeholder="YOUR EMAIL" required>
                     <span class="form-focus"></span>
+                    <span class="form-error" aria-live="polite"></span>
                 </div>
                 <div class="form-group">
                     <textarea id="message" name="message" placeholder="YOUR MESSAGE" rows="5" required></textarea>
                     <span class="form-focus"></span>
+                    <span class="form-error" aria-live="polite"></span>
                 </div>
                 <button type="submit" class="btn btn-submit">
                     <span>SEND MESSAGE</span>

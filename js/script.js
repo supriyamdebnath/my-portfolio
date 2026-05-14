@@ -411,13 +411,17 @@ console.log('%c🎮 Try the Konami Code: ↑ ↑ ↓ ↓ ← → ← → B A', '
 
 // ========== RESUME & CV FUNCTIONS ==========
 function viewResume() {
-    window.open("assets/resume/Supriyam_Debnath_CV.pdf", "_blank");
+    const pdfPath = "assets/resume/Supriyam_Debnath_CV.pdf";
+    const fullResumeUrl = new URL(pdfPath, window.location.href).toString();
+    window.open(fullResumeUrl, "_blank", "noopener");
 }
 
 function downloadResume() {
+    const pdfPath = "assets/resume/Supriyam_Debnath_CV.pdf";
+    const fullResumeUrl = new URL(pdfPath, window.location.href).toString();
     const link = document.createElement('a');
 
-    link.href = "assets/resume/Supriyam_Debnath_CV.pdf";
+    link.href = fullResumeUrl;
     link.download = "Supriyam_Debnath_CV.pdf";
 
     document.body.appendChild(link);
@@ -464,6 +468,98 @@ function showResumeNotification(message, type = 'info') {
             document.body.removeChild(notification);
         }, 400);
     }, 3500);
+}
+
+const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
+
+function showFormMessage(message, type = 'error') {
+    if (!formMessage) return;
+    formMessage.textContent = message;
+    formMessage.classList.remove('error', 'success');
+    formMessage.classList.add('form-message', 'show', type);
+}
+
+function setFieldError(field, message) {
+    if (!field) return;
+    const wrapper = field.closest('.form-group');
+    if (wrapper) wrapper.classList.add('invalid');
+    const error = wrapper?.querySelector('.form-error');
+    if (error) error.textContent = message;
+}
+
+function clearFieldError(field) {
+    if (!field) return;
+    const wrapper = field.closest('.form-group');
+    if (wrapper) wrapper.classList.remove('invalid');
+    const error = wrapper?.querySelector('.form-error');
+    if (error) error.textContent = '';
+}
+
+function validateEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function validateContactForm() {
+    if (!contactForm) return true;
+
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+    const messageField = document.getElementById('message');
+    let isValid = true;
+
+    clearFieldError(nameField);
+    clearFieldError(emailField);
+    clearFieldError(messageField);
+    showFormMessage('', 'success');
+
+    if (!nameField?.value.trim()) {
+        setFieldError(nameField, 'Please enter your name.');
+        isValid = false;
+    }
+
+    if (!emailField?.value.trim()) {
+        setFieldError(emailField, 'Please enter your email.');
+        isValid = false;
+    } else if (!validateEmail(emailField.value.trim())) {
+        setFieldError(emailField, 'Please enter a valid email address.');
+        isValid = false;
+    }
+
+    if (!messageField?.value.trim()) {
+        setFieldError(messageField, 'Write a short message.');
+        isValid = false;
+    }
+
+    if (!isValid) {
+        showFormMessage('Please fix the highlighted fields and try again.', 'error');
+    }
+
+    return isValid;
+}
+
+if (contactForm) {
+    contactForm.addEventListener('submit', (e) => {
+        if (!validateContactForm()) {
+            e.preventDefault();
+            return;
+        }
+
+        showFormMessage('Preparing message...', 'success');
+    });
+
+    ['name', 'email', 'message'].forEach((fieldId) => {
+        const field = document.getElementById(fieldId);
+        if (!field) return;
+
+        field.addEventListener('input', () => {
+            clearFieldError(field);
+            if (formMessage) {
+                formMessage.textContent = '';
+                formMessage.classList.remove('show', 'error', 'success');
+            }
+        });
+    });
 }
 
 // ========== PROJECT MODAL FUNCTIONS ==========
