@@ -1086,6 +1086,13 @@ body::before {
     margin-bottom: 10px;
 }
 
+.hero-stats .stat:nth-child(3) .stat-number {
+    font-size: clamp(22px, 1.9vw, 28px);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: visible;
+}
+
 .stat-label {
     font-size: 13px;
     color: var(--text-secondary);
